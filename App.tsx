@@ -2,29 +2,88 @@ import "./global.css";
 import {
   Text,
   SafeAreaView,
-  Alert,
-  AlertIcon,
-  AlertText,
-  InfoIcon,
   GluestackUIProvider,
+  Button,
+  ButtonText,
+  Center,
+  CloseIcon,
+  Heading,
+  Icon,
+  Modal,
+  ModalBackdrop,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
 } from "./components/ui";
-import { Search } from "lucide-react-native";
+import { useState, useRef } from "react";
+
+function Example() {
+  const [showModal, setShowModal] = useState(false);
+  console.log(showModal);
+  const ref = useRef(null);
+  return (
+    <Center className='flex-1 bg-red-200'>
+      <Button onPress={() => setShowModal(true)} ref={ref}>
+        <ButtonText>Show Modal</ButtonText>
+      </Button>
+      <Modal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false);
+        }}
+        finalFocusRef={ref}
+      >
+        <ModalBackdrop className='bg-green-200' />
+        <ModalContent>
+          <ModalHeader>
+            <Heading size="lg">Engage with Modals</Heading>
+            <ModalCloseButton>
+              <Icon as={CloseIcon} />
+            </ModalCloseButton>
+          </ModalHeader>
+          <ModalBody>
+            <Text>
+              Elevate user interactions with our versatile modals. Seamlessly
+              integrate notifications, forms, and media displays. Make an impact
+              effortlessly.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              action="secondary"
+              className="mr-3"
+              onPress={() => {
+                setShowModal(false);
+              }}
+            >
+              <ButtonText>Cancel</ButtonText>
+            </Button>
+            <Button
+              size="sm"
+              action="positive"
+              className="border-0"
+              onPress={() => {
+                setShowModal(false);
+              }}
+            >
+              <ButtonText>Explore</ButtonText>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Center>
+  );
+}
 
 export default function App() {
   return (
     <GluestackUIProvider>
-      <SafeAreaView className="justify-center items-center flex-1">
-        <Text className="text-red-500">
-          Open up App.tsx to start working on your app!
-        </Text>
-
-        <Alert className="mx-2.5" action="info" variant="solid">
-          <AlertIcon as={Search} className="mr-2" />
-          <AlertText>
-            We have updated our terms of service. Please review and accept to
-            continue using our service.
-          </AlertText>
-        </Alert>
+      <SafeAreaView className="flex-1">
+        <Example />
       </SafeAreaView>
     </GluestackUIProvider>
   );
