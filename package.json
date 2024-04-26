@@ -42,6 +42,7 @@
     "@gluestack-ui/tooltip": "latest",
     "@legendapp/motion": "latest",
     "expo": "~50.0.14",
+    "expo-linear-gradient": "~12.7.2",
     "expo-status-bar": "~1.11.1",
     "jscodeshift": "0.15.2",
     "lucide-react-native": "^0.371.0",
