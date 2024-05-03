@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   GluestackUIProvider,
 } from "./components/ui";
-import { H1, H2, H3, H4, H5, H6 } from "@expo/html-elements";
 
 export default function App() {
   return (
@@ -14,7 +13,6 @@ export default function App() {
       <GluestackUIProvider>
         <Text size="xl">hello world</Text>
         <Heading>hello world</Heading>
-        <H5>hello world</H5>
       </GluestackUIProvider>
     </SafeAreaView>
   );
