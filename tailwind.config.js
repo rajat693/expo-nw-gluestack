@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: ["./App.{tsx,jsx,ts,js}", "./components/**/*.{tsx,jsx,ts,js}"],
+  content: ["./App.{tsx,jsx,ts,js}", "./components/ui/**/*.{tsx,jsx,ts,js}"],
   safelist: [
     'gap-x-2',
     'gap-y-6',

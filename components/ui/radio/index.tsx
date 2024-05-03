@@ -130,11 +130,11 @@ const RadioIndicator = React.forwardRef(
     { className, ...props }: { className?: string } & IRadioIndicatorProps,
     ref?: any
   ) => {
-    const { size } = useStyleContext(SCOPE);
+    const { size: parentSize } = useStyleContext(SCOPE);
     return (
       <UIRadio.Indicator
         className={radioIndicatorStyle({
-          parentVariants: { size },
+          parentVariants: { size: parentSize },
           class: className,
         })}
         ref={ref}
