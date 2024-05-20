@@ -180,6 +180,9 @@ module.exports = {
       fontSize: {
         '2xs': '10px',
       },
+      boxShadow: {
+        'md': 'var(--color-shadow123)',
+      }
     },
     plugins: [],
   },
