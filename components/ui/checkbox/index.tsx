@@ -1,17 +1,54 @@
 'use client';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createCheckbox } from '@gluestack-ui/checkbox';
 import { View, Pressable, Text } from 'react-native';
 import { tva } from '@gluestack-ui/nativewind-utils/tva';
+import { Svg } from 'react-native-svg';
 import {
   withStyleContext,
   useStyleContext,
 } from '@gluestack-ui/nativewind-utils/withStyleContext';
 import { withStyleContextAndStates } from '@gluestack-ui/nativewind-utils/withStyleContextAndStates';
-import { cssInterop } from '@gluestack-ui/nativewind-utils/cssInterop';
+import { cssInterop } from 'nativewind';
 import { withStates } from '@gluestack-ui/nativewind-utils/withStates';
 import type { VariantProps } from '@gluestack-ui/nativewind-utils';
 import { Platform } from 'react-native';
+
+const PrimitiveIcon = React.forwardRef(
+  (
+    { height, width, fill, color, size, stroke, as: AsComp, ...props }: any,
+    ref?: any
+  ) => {
+    const sizeProps = useMemo(() => {
+      return size ? { size } : { height, width };
+    }, [size, height, width]);
+
+    const colorProps =
+      stroke === 'currentColor' && color !== undefined ? color : stroke;
+
+    if (AsComp) {
+      return (
+        <AsComp
+          ref={ref}
+          fill={fill}
+          {...props}
+          {...sizeProps}
+          stroke={colorProps}
+        />
+      );
+    }
+    return (
+      <Svg
+        ref={ref}
+        height={height}
+        width={width}
+        fill={fill}
+        stroke={colorProps}
+        {...props}
+      />
+    );
+  }
+);
 
 const SCOPE = 'CHECKBOX';
 const UICheckbox = createCheckbox({
@@ -21,16 +58,27 @@ const UICheckbox = createCheckbox({
       ? withStyleContext(View, SCOPE)
       : withStyleContextAndStates(Pressable, SCOPE),
   Group: Platform.OS === 'web' ? View : withStates(View),
-  Icon: Platform.OS === 'web' ? View : withStates(View),
+  Icon: Platform.OS === 'web' ? PrimitiveIcon : withStates(PrimitiveIcon),
   Label: Platform.OS === 'web' ? Text : withStates(Text),
   Indicator: Platform.OS === 'web' ? View : withStates(View),
 });
 
 cssInterop(UICheckbox, { className: 'style' });
 cssInterop(UICheckbox.Group, { className: 'style' });
-cssInterop(UICheckbox.Icon, { className: 'style' });
 cssInterop(UICheckbox.Label, { className: 'style' });
 cssInterop(UICheckbox.Indicator, { className: 'style' });
+cssInterop(UICheckbox.Icon, {
+  className: {
+    target: 'style',
+    nativeStyleToProp: {
+      height: 'height',
+      width: 'width',
+      //@ts-ignore
+      fill: 'fill',
+      color: 'color',
+    },
+  },
+});
 
 const checkboxStyle = tva({
   base: 'group/checkbox flex-row items-center justify-start gap-2 web:cursor-pointer data-[disabled=true]:cursor-not-allowed',
@@ -48,7 +96,7 @@ const checkboxIndicatorStyle = tva({
 });
 
 const checkboxLabelStyle = tva({
-  base: 'text-typography-600 data-[checked=true]:text-typography-900 group-hover/checkbox:text-typography-900 group-hover/checkbox:data-[checked=true]:text-typography-900 group-hover/checkbox:data-[checked=true]:data-[disabled=true]:text-typography-900 group-hover/checkbox:data-[disabled=true]:text-typography-400 active:text-typography-900 active:data-[checked=true]:text-typography-900 data-[disabled=true]:opacity-40 web:select-none',
+  base: 'text-typography-600 data-[checked=true]:text-typography-900 group-hover/checkbox:text-typography-900 group-hover/checkbox:data-[checked=true]:text-typography-900 group-hover/checkbox:data-[checked=true]:data-[disabled=true]:text-typography-900 group-hover/checkbox:data-[disabled=true]:text-typography-400 data-[active=true]:text-typography-900 data-[active=true]:data-[checked=true]:text-typography-900 data-[disabled=true]:opacity-40 web:select-none',
   parentVariants: {
     size: {
       lg: 'text-lg',
@@ -59,7 +107,7 @@ const checkboxLabelStyle = tva({
 });
 
 const checkboxIconStyle = tva({
-  base: 'data-[disabled=true]:opacity-40',
+  base: 'data-[disabled=true]:opacity-40 stroke-typography-50 fill-none',
 
   parentVariants: {
     size: {
@@ -154,38 +202,35 @@ const CheckboxIcon = React.forwardRef(
   (
     {
       className,
-      as: AsComp,
-      fill = 'none',
       size,
-      color = 'gray',
       ...props
     }: ICheckboxIconProps & {
       className?: any;
-      fill?: string;
-      color?: string;
       as?: any;
     },
     ref?: any
   ) => {
     const { size: parentSize } = useStyleContext(SCOPE);
 
-    if (AsComp) {
+    if (typeof size === 'number') {
       return (
-        <UICheckbox.Icon>
-          <AsComp
-            fill={fill}
-            color={color}
-            {...props}
-            ref={ref}
-            className={checkboxIconStyle({
-              parentVariants: {
-                size: parentSize,
-              },
-              class: className,
-              size,
-            })}
-          />
-        </UICheckbox.Icon>
+        <UICheckbox.Icon
+          ref={ref}
+          {...props}
+          className={checkboxIconStyle({ class: className })}
+          size={size}
+        />
+      );
+    } else if (
+      (props.height !== undefined || props.width !== undefined) &&
+      size === undefined
+    ) {
+      return (
+        <UICheckbox.Icon
+          ref={ref}
+          {...props}
+          className={checkboxIconStyle({ class: className })}
+        />
       );
     }
 
@@ -199,9 +244,6 @@ const CheckboxIcon = React.forwardRef(
           size,
         })}
         {...props}
-        //@ts-ignore
-        fill={fill}
-        color={color}
         ref={ref}
       />
     );
