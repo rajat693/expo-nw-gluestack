@@ -1,30 +1,27 @@
-'use client';
-
-import React from 'react';
-import { createPopover } from '@gluestack-ui/popover';
-import { tva } from '@gluestack-ui/nativewind-utils/tva';
+"use client";
+import React from "react";
+import { createPopover } from "@gluestack-ui/popover";
+import { tva } from "@gluestack-ui/nativewind-utils/tva";
 import {
   withStyleContext,
   useStyleContext,
-} from '@gluestack-ui/nativewind-utils/withStyleContext';
-import { withStyleContextAndStates } from '@gluestack-ui/nativewind-utils/withStyleContextAndStates';
-import { cssInterop } from '@gluestack-ui/nativewind-utils/cssInterop';
-import type { VariantProps } from '@gluestack-ui/nativewind-utils';
-
-import { View, Pressable, Platform, ScrollView } from 'react-native';
-
+} from "@gluestack-ui/nativewind-utils/withStyleContext";
+import { withStyleContextAndStates } from "@gluestack-ui/nativewind-utils/withStyleContextAndStates";
+import { cssInterop } from "@gluestack-ui/nativewind-utils/cssInterop";
+import type { VariantProps } from "@gluestack-ui/nativewind-utils";
+import { View, Pressable, Platform, ScrollView } from "react-native";
 import {
   Motion,
   createMotionAnimatedComponent,
   AnimatePresence,
-} from '@legendapp/motion';
+} from "@legendapp/motion";
 
 const AnimatedPressable = createMotionAnimatedComponent(Pressable);
-const SCOPE = 'POPOVER';
+const SCOPE = "POPOVER";
 const UIPopover = createPopover({
   // @ts-ignore
   Root:
-    Platform.OS === 'web'
+    Platform.OS === "web"
       ? withStyleContext(View, SCOPE)
       : withStyleContextAndStates(View, SCOPE),
   Arrow: Motion.View,
@@ -37,62 +34,63 @@ const UIPopover = createPopover({
   AnimatedPresence: AnimatePresence,
 });
 
-cssInterop(UIPopover, { className: 'style' });
-cssInterop(UIPopover.Arrow, { className: 'style' });
-cssInterop(UIPopover.Content, { className: 'style' });
-cssInterop(UIPopover.Header, { className: 'style' });
-cssInterop(UIPopover.Footer, { className: 'style' });
-cssInterop(UIPopover.Body, { className: 'style' });
-cssInterop(UIPopover.Backdrop, { className: 'style' });
-cssInterop(UIPopover.CloseButton, { className: 'style' });
+cssInterop(UIPopover, { className: "style" });
+cssInterop(UIPopover.Arrow, { className: "style" });
+cssInterop(UIPopover.Content, { className: "style" });
+cssInterop(UIPopover.Header, { className: "style" });
+cssInterop(UIPopover.Footer, { className: "style" });
+cssInterop(UIPopover.Body, { className: "style" });
+cssInterop(UIPopover.Backdrop, { className: "style" });
+cssInterop(UIPopover.CloseButton, { className: "style" });
 
 const popoverStyle = tva({
-  base: 'group/popover w-full h-full justify-center items-center web:pointer-events-none',
+  base: "group/popover w-full h-full justify-center items-center web:pointer-events-none",
   variants: {
     size: {
-      xs: '',
-      sm: '',
-      md: '',
-      lg: '',
-      full: '',
+      xs: "",
+      sm: "",
+      md: "",
+      lg: "",
+      full: "",
     },
   },
 });
+
 const popoverArrowStyle = tva({
-  base: 'bg-background-50 z-1 absolute overflow-hidden h-3.5 w-3.5',
+  base: "bg-background-50 z-1 absolute overflow-hidden h-3.5 w-3.5",
 });
 
 const popoverBackdropStyle = tva({
-  base: 'absolute left-0 top-0 right-0 bottom-0 bg-background-dark web:cursor-default',
+  base: "absolute left-0 top-0 right-0 bottom-0 bg-background-dark web:cursor-default",
 });
 
 const popoverBodyStyle = tva({
-  base: 'p-4 pt-2',
+  base: "p-4 pt-2",
 });
 
 const popoverCloseButtonStyle = tva({
-  base: 'group/popover-close-button z-10 p-2 rounded-sm data-[focus-visible=true]:web:bg-background-100 web:outline-0 cursor-pointer',
+  base: "group/popover-close-button z-10 p-2 rounded-sm data-[focus-visible=true]:web:bg-background-100 web:outline-0 cursor-pointer",
 });
 
 const popoverContentStyle = tva({
-  base: 'bg-background-50 rounded-lg overflow-hidden',
+  base: "bg-background-50 rounded-lg overflow-hidden",
   parentVariants: {
     size: {
-      xs: 'w-[60%] max-w-[360px]',
-      sm: 'w-[70%] max-w-[420px]',
-      md: 'w-[80%] max-w-[510px]',
-      lg: 'w-[90%] max-w-[640px]',
-      full: 'w-full',
+      xs: "w-[60%] max-w-[360px]",
+      sm: "w-[70%] max-w-[420px]",
+      md: "w-[80%] max-w-[510px]",
+      lg: "w-[90%] max-w-[640px]",
+      full: "w-full",
     },
   },
 });
 
 const popoverFooterStyle = tva({
-  base: 'p-4 flex-row justify-end items-center flex-wrap border-t border-outline-300',
+  base: "p-4 flex-row justify-end items-center flex-wrap border-t border-outline-300",
 });
 
 const popoverHeaderStyle = tva({
-  base: 'p-4 pb-2 justify-between items-center flex-row',
+  base: "p-4 pb-2 justify-between items-center flex-row",
 });
 
 type IPopoverProps = React.ComponentProps<typeof UIPopover> &
@@ -125,7 +123,7 @@ const Popover = React.forwardRef(
   (
     {
       className,
-      size = 'md',
+      size = "md",
       ...props
     }: { className?: string } & IPopoverProps,
     ref?: any
@@ -149,12 +147,12 @@ const PopoverArrow = React.forwardRef(
     <UIPopover.Arrow
       ref={ref}
       transition={{
-        type: 'spring',
+        type: "spring",
         damping: 18,
         stiffness: 250,
         mass: 0.9,
         opacity: {
-          type: 'timing',
+          type: "timing",
           duration: 50,
           delay: 50,
         },
@@ -184,12 +182,12 @@ const PopoverBackdrop = React.forwardRef(
           opacity: 0,
         }}
         transition={{
-          type: 'spring',
+          type: "spring",
           damping: 18,
           stiffness: 450,
           mass: 0.9,
           opacity: {
-            type: 'timing',
+            type: "timing",
             duration: 50,
             delay: 50,
           },
@@ -247,12 +245,12 @@ const PopoverContent = React.forwardRef(
       <UIPopover.Content
         ref={ref}
         transition={{
-          type: 'spring',
+          type: "spring",
           damping: 18,
           stiffness: 250,
           mass: 0.9,
           opacity: {
-            type: 'timing',
+            type: "timing",
             duration: 50,
             delay: 50,
           },
@@ -301,14 +299,14 @@ const PopoverHeader = React.forwardRef(
   )
 );
 
-Popover.displayName = 'Popover';
-PopoverArrow.displayName = 'PopoverArrow';
-PopoverBackdrop.displayName = 'PopoverBackdrop';
-PopoverContent.displayName = 'PopoverContent';
-PopoverHeader.displayName = 'PopoverHeader';
-PopoverFooter.displayName = 'PopoverFooter';
-PopoverBody.displayName = 'PopoverBody';
-PopoverCloseButton.displayName = 'PopoverCloseButton';
+Popover.displayName = "Popover";
+PopoverArrow.displayName = "PopoverArrow";
+PopoverBackdrop.displayName = "PopoverBackdrop";
+PopoverContent.displayName = "PopoverContent";
+PopoverHeader.displayName = "PopoverHeader";
+PopoverFooter.displayName = "PopoverFooter";
+PopoverBody.displayName = "PopoverBody";
+PopoverCloseButton.displayName = "PopoverCloseButton";
 
 export {
   Popover,

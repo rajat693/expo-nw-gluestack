@@ -3,64 +3,179 @@ import React from "react";
 import {
   SafeAreaView,
   GluestackUIProvider,
-  AddIcon,
   Button,
   ButtonText,
-  GlobeIcon,
+  Popover,
+  PopoverBackdrop,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverFooter,
+  PopoverHeader,
+  Text,
+  Heading,
+  CloseIcon,
   Icon,
-  Menu,
-  MenuItem,
-  MenuItemLabel,
-  SettingsIcon,
-  Box,
+  ChevronDownIcon,
+  Select,
+  SelectBackdrop,
+  SelectContent,
+  SelectDragIndicator,
+  SelectDragIndicatorWrapper,
+  SelectIcon,
+  SelectInput,
+  SelectItem,
+  SelectPortal,
+  SelectTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipText,
+  CheckIcon,
+  Checkbox,
+  CheckboxIcon,
+  CheckboxIndicator,
+  CheckboxLabel,
+  CircleIcon,
+  Radio,
+  RadioGroup,
+  RadioIcon,
+  RadioIndicator,
+  RadioLabel,
 } from "./components/ui";
-import { PuzzleIcon, PaintBucket } from "lucide-react-native";
 
-const TestingMenu = () => {
+const TestingPopover = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   return (
-    <Box className="h-screen w-screen justify-center items-center">
-      <Menu
-        placement="top"
-        trigger={({ ...triggerProps }) => {
-          return (
-            <Button {...triggerProps}>
-              <ButtonText>Menu</ButtonText>
-            </Button>
-          );
-        }}
-      >
-        <MenuItem key="Community" textValue="Community">
-          <Icon as={GlobeIcon} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Community</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Plugins" textValue="Plugins">
-          {/* PuzzleIcon is imported from 'lucide-react-native' */}
-          <Icon as={PuzzleIcon} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Plugins</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Theme" textValue="Theme">
-          {/* PaintBucket is imported from 'lucide-react-native' */}
-          <Icon as={PaintBucket} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Theme</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Settings" textValue="Settings">
-          <Icon as={SettingsIcon} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Settings</MenuItemLabel>
-        </MenuItem>
-        <MenuItem key="Add account" textValue="Add account">
-          <Icon as={AddIcon} size="sm" mr="$2" />
-          <MenuItemLabel size="sm">Add account</MenuItemLabel>
-        </MenuItem>
-      </Menu>
-    </Box>
+    <Popover
+      isOpen={isOpen}
+      onClose={handleClose}
+      onOpen={handleOpen}
+      placement="bottom"
+      size="md"
+      trigger={(triggerProps) => {
+        return (
+          <Button {...triggerProps}>
+            <ButtonText>Popover</ButtonText>
+          </Button>
+        );
+      }}
+    >
+      <PopoverBackdrop className="opacity-85 bg-red-500" />
+      <PopoverContent className="max-w-[400]">
+        <PopoverHeader>
+          <Heading size="lg">Welcome!</Heading>
+          <PopoverCloseButton>
+            <Icon as={CloseIcon} />
+          </PopoverCloseButton>
+        </PopoverHeader>
+        <PopoverBody>
+          <Text size="sm">
+            Join the product tour and start creating your own checklist. Are you
+            ready to jump in?
+          </Text>
+        </PopoverBody>
+        <PopoverFooter>
+          <Text size="xs" className="flex-1">
+            Step 2 of 3
+          </Text>
+          <Button
+            variant="outline"
+            action="secondary"
+            onPress={handleClose}
+            className="mr-3"
+          >
+            <ButtonText>Back</ButtonText>
+          </Button>
+          <Button onPress={handleClose}>
+            <ButtonText>Next</ButtonText>
+          </Button>
+        </PopoverFooter>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const TestingSelect = () => {
+  return (
+    <Select>
+      <SelectTrigger variant="outline" size="md">
+        <SelectInput placeholder="Select option" />
+        <SelectIcon className="mr-3" as={ChevronDownIcon} />
+      </SelectTrigger>
+      <SelectPortal>
+        <SelectBackdrop />
+        <SelectContent>
+          <SelectDragIndicatorWrapper>
+            <SelectDragIndicator />
+          </SelectDragIndicatorWrapper>
+          <SelectItem label="UX Research" value="ux" />
+          <SelectItem label="Web Development" value="web" />
+          <SelectItem
+            label="Cross Platform Development Process"
+            value="Cross Platform Development Process"
+          />
+          <SelectItem label="UI Designing" value="ui" isDisabled={true} />
+          <SelectItem label="Backend Development" value="backend" />
+        </SelectContent>
+      </SelectPortal>
+    </Select>
+  );
+};
+
+const TestingTooltip = () => {
+  return (
+    <Tooltip
+      placement="top"
+      trigger={(triggerProps) => {
+        return (
+          <Button className="h-24" {...triggerProps}>
+            <ButtonText>Hover on me!</ButtonText>
+          </Button>
+        );
+      }}
+    >
+      <TooltipContent>
+        <TooltipText>Tooltip</TooltipText>
+      </TooltipContent>
+    </Tooltip>
+  );
+};
+
+const TestingCheckbox = () => {
+  return (
+    <Checkbox size="md" isInvalid={false} isDisabled={false} value={""}>
+      <CheckboxIndicator>
+        <CheckboxIcon as={CheckIcon} />
+      </CheckboxIndicator>
+      <CheckboxLabel>Label</CheckboxLabel>
+    </Checkbox>
+  );
+};
+
+const TestingRadio = () => {
+  return (
+    <RadioGroup>
+      <Radio value="change" size="md" isInvalid={false} isDisabled={false}>
+        <RadioIndicator>
+          <RadioIcon as={CircleIcon} className="stroke-1" />
+        </RadioIndicator>
+        <RadioLabel>Label</RadioLabel>
+      </Radio>
+    </RadioGroup>
   );
 };
 
 export default function App() {
   const [colorMode, setColorMode] = React.useState<"dark" | "light">("dark");
   return (
-    <SafeAreaView className="flex-1 justify-center items-center">
-      <GluestackUIProvider mode={colorMode}>
+    <GluestackUIProvider mode={colorMode}>
+      <SafeAreaView className="flex-1 justify-center items-center">
         <Button
           onPress={() =>
             setColorMode((prev) => (prev === "light" ? "dark" : "light"))
@@ -69,8 +184,8 @@ export default function App() {
         >
           <ButtonText>{colorMode}</ButtonText>
         </Button>
-        <TestingMenu />
-      </GluestackUIProvider>
-    </SafeAreaView>
+        <TestingRadio />
+      </SafeAreaView>
+    </GluestackUIProvider>
   );
 }
