@@ -8,7 +8,8 @@ import {
   withStyleContext,
   useStyleContext,
 } from '@gluestack-ui/nativewind-utils/withStyleContext';
-import { cssInterop } from 'nativewind';
+// import { cssInterop } from 'nativewind';
+import { cssInterop } from '@gluestack-ui/nativewind-utils/cssInterop';
 import { withStates } from '@gluestack-ui/nativewind-utils/withStates';
 import { withStyleContextAndStates } from '@gluestack-ui/nativewind-utils/withStyleContextAndStates';
 import type { VariantProps } from '@gluestack-ui/nativewind-utils';
@@ -69,7 +70,7 @@ const radioIconStyle = tva({
 
   parentVariants: {
     size: {
-      sm: 'h-2 w-2',
+      sm: 'h-[9px] w-[9px]',
       md: 'h-3 w-3',
       lg: 'h-4 w-4',
     },
