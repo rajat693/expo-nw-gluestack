@@ -16,7 +16,16 @@ import type { VariantProps } from '@gluestack-ui/nativewind-utils';
 
 const PrimitiveIcon = React.forwardRef(
   (
-    { height, width, fill, color, size, stroke, as: AsComp, ...props }: any,
+    {
+      height,
+      width,
+      fill,
+      color,
+      size,
+      stroke = 'currentColor',
+      as: AsComp,
+      ...props
+    }: any,
     ref?: any
   ) => {
     const sizeProps = useMemo(() => {
@@ -66,7 +75,7 @@ const radioGroupStyle = tva({
 });
 
 const radioIconStyle = tva({
-  base: 'rounded-full justify-center items-center stroke-background-800 fill-background-800',
+  base: 'rounded-full justify-center items-center text-background-800 fill-background-800',
 
   parentVariants: {
     size: {
@@ -128,11 +137,12 @@ cssInterop(UIRadio.Icon, {
   className: {
     target: 'style',
     nativeStyleToProp: {
-      height: 'height',
-      width: 'width',
-      //@ts-ignore
-      fill: 'fill',
-      color: 'color',
+      height: true,
+      width: true,
+      // @ts-ignore
+      fill: true,
+      color: true,
+      stroke: true,
     },
   },
 });
