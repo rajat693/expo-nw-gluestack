@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import { createPopover } from '@gluestack-ui/popover';
 import { tva } from '@gluestack-ui/nativewind-utils/tva';
@@ -9,7 +10,9 @@ import {
 import { withStyleContextAndStates } from '@gluestack-ui/nativewind-utils/withStyleContextAndStates';
 import { cssInterop } from '@gluestack-ui/nativewind-utils/cssInterop';
 import type { VariantProps } from '@gluestack-ui/nativewind-utils';
+
 import { View, Pressable, Platform, ScrollView } from 'react-native';
+
 import {
   Motion,
   createMotionAnimatedComponent,
@@ -55,7 +58,6 @@ const popoverStyle = tva({
     },
   },
 });
-
 const popoverArrowStyle = tva({
   base: 'bg-background-50 z-1 absolute overflow-hidden h-3.5 w-3.5',
 });
@@ -80,7 +82,7 @@ const popoverContentStyle = tva({
       sm: 'w-[70%] max-w-[420px]',
       md: 'w-[80%] max-w-[510px]',
       lg: 'w-[90%] max-w-[640px]',
-      full: 'w-full',
+      full: 'w-[100%]',
     },
   },
 });
